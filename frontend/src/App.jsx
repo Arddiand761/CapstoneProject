@@ -1,24 +1,39 @@
-import Navbar  from './navbar/navbar'
-import Login from './login/login'
-import React from 'react'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React from "react";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+import Login from "./component/login";
+import Home from "./component/home";
+import Register from "./component/register";
 
-function App() {
 
+function app (){
   return (
-    <>
-      <Login />
-      <Navbar />
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-        </a>
-      </div>
-    </>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Login/>}></Route>
+
+        <Route path="/home" element={
+          localStorage.getItem("isLoggedIn") === "true" ? (
+          <Home/>
+          ) :(
+            <Navigate to="/" replace/>
+          )
+        }>
+        </Route>
+
+        <Route path="/register" element={<Register/>}></Route>
+
+
+
+
+      </Routes>
+    </Router>
   )
 }
 
-export default App
+
+export default app;
