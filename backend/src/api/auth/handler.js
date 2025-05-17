@@ -45,8 +45,8 @@ const registerUserHandler = async (request, h) => {
 
     // 5. Simpan pengguna baru ke array (simulasi database)
     users.push(newUser);
-    console.log('Pengguna baru terdaftar:', newUser); // Untuk debugging
-    console.log('Semua pengguna saat ini:', users); // Untuk debugging
+    console.log('Pengguna baru terdaftar:', newUser.email); // Untuk debugging
+    console.log('Semua pengguna saat ini (setelah register):', users.map(u => u.email)); // Untuk debugging
 
     // 6. Kirim respons sukses
     return h.response({
@@ -81,8 +81,8 @@ const loginUserHandler = async (request, h) => {
     // 1. Cari pengguna berdasarkan email (simulasi)
     const user = users.find((u) => u.email === email);
     console.log('Mencoba login dengan email:', email); // Untuk debugging
-    console.log('Pengguna ditemukan (jika ada):', user); // Untuk debugging
-    console.log('Semua pengguna saat ini (untuk cek):', users); // Untuk debugging
+    console.log('Pengguna ditemukan (jika ada saat login):', user ? user.email : undefined); // Untuk debugging
+    console.log('Semua pengguna saat ini (saat login):', users.map(u => u.email)); // Untuk debugging
 
 
     if (!user) {
@@ -116,14 +116,10 @@ const loginUserHandler = async (request, h) => {
       message: 'Login berhasil!',
       data: {
         token,
-        // Anda bisa juga menyertakan data pengguna lain yang tidak sensitif di sini jika perlu
-        // userId: user.id,
-        // username: user.username,
       },
     }).code(200); // 200 OK
   } catch (error) {
     console.error('Error saat login:', error);
-    // Jika error karena JWT_SECRET_KEY tidak ada, generateToken akan throw error
     if (error.message.includes('Konfigurasi server tidak lengkap')) {
         return h.response({
             status: 'error',
@@ -139,8 +135,9 @@ const loginUserHandler = async (request, h) => {
   }
 };
 
-// Mengekspor handler agar bisa digunakan di rute
+// Mengekspor handler DAN array users agar bisa digunakan di modul lain
 module.exports = {
   registerUserHandler,
   loginUserHandler,
+  users, // <-- PERUBAHAN PENTING: Ekspor array users
 };

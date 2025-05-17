@@ -32,3 +32,4 @@
     // Mengekspor array yang berisi semua rute aplikasi
     module.exports = allRoutes;
     
+    
