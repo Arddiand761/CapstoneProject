@@ -6,10 +6,11 @@ import {
   Navigate,
 } from "react-router-dom";
 import Login from "./component/login";
-import Home from "./component/home";
+import HomePage from "./component/home";
 import Register from "./component/register";
-
-
+import Introduction from "./component/introduction";
+import DataDiri from "./component/DataDiri.jsx";
+import Informasi from"./component/InformasiPribadi.jsx"
 function app (){
   return (
     <Router>
@@ -18,7 +19,7 @@ function app (){
 
         <Route path="/home" element={
           localStorage.getItem("isLoggedIn") === "true" ? (
-          <Home/>
+          <HomePage/>
           ) :(
             <Navigate to="/" replace/>
           )
@@ -27,8 +28,9 @@ function app (){
 
         <Route path="/register" element={<Register/>}></Route>
 
-
-
+        <Route path="/introduction" element={<Introduction/>}></Route>
+        <Route path="/datadiri" element={<DataDiri/>}></Route>
+        <Route path="/informasi" element={<Informasi/>}></Route>
 
       </Routes>
     </Router>

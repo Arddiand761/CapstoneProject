@@ -1,13 +1,24 @@
 import React from "react";
 import { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
+import { Route, useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [keepSignedIn, setKeepSignedIn] = useState(true);
+  const navigate = useNavigate();
 
+  const handleLogin = (e) => {
+    e.preventDefault();
 
+    if (email === "admin@email.com" && password === "admin") {
+      localStorage.setItem("isLoggedIn", "true");
+      navigate("/home");
+    } else {
+      alert("invalid");
+    }
+  };
 
   return (
     <div className="min-h-screen flex">
@@ -17,7 +28,7 @@ const Login = () => {
           <img src="assets/SecondaryLogo.svg" alt="Logo" className="h-40" />
         </div>
 
-        <form className="w-full max-w-sm space-y-4">
+        <form className="w-full max-w-sm space-y-4" onSubmit={handleLogin}>
           <div>
             <label className="block mb-1 text-sm font-medium">
               Email Address
@@ -82,12 +93,10 @@ const Login = () => {
             alt="Budgetease"
             className="h-120 mx-auto mb-4"
           />
-          <h1 className="text-3xl font-bold text-green-700"></h1>
         </div>
       </div>
     </div>
   );
 };
-
 
 export default Login;
