@@ -14,6 +14,8 @@ import Introduction from "./component/introduction";
 import DataDiri from "./component/DataDiri.jsx";
 import Informasi from "./component/InformasiPribadi.jsx";
 import Profile from "./component/profile.jsx";
+import TransactionInputPage from "./component/TransactionInput.jsx";
+import TransactionListPage from "./component/TransactionList.jsx";
 
 const AnimatedRoutes = () => {
   const location = useLocation();
@@ -58,6 +60,8 @@ const AnimatedRoutes = () => {
         <Route path="/introduction" element={<Introduction />}></Route>
         <Route path="/datadiri" element={<DataDiri />}></Route>
         <Route path="/informasi" element={<Informasi />}></Route>
+        <Route path="/transactionInput" element={<TransactionInputPage/>}></Route>
+        <Route path="transactionList" element={<TransactionListPage/>}></Route>
       </Routes>
     </AnimatePresence>
   );

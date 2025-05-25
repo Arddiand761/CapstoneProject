@@ -84,11 +84,19 @@ const HomePage = () => {
       {/* Main Content */}
       <main className="flex-1 ml-64 p-6 space-y-6">
         {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
-          <p className="text-gray-600">
-            Selamat datang kembali! Berikut ringkasan keuangan Anda.
-          </p>
+        <div className="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div>
+            <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
+            <p className="text-gray-600">
+              Selamat datang kembali! Berikut ringkasan keuangan Anda.
+            </p>
+          </div>
+          <a
+            href="/transactionInput"
+            className="inline-block bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-6 py-3 rounded-lg shadow-md transition-all duration-200"
+          >
+            + Input Transaksi
+          </a>
         </div>
 
         {/* Top Cards */}
@@ -346,6 +354,3 @@ const HomePage = () => {
 };
 
 export default HomePage;
-
-
-

@@ -16,7 +16,7 @@ const Sidebar = () => {
     { name: "Profile", icon: <User size={18} />, path: "/profile" },
     { name: "Dashboard", icon: <Home size={18} />, path: "/home" },
     { name: "Budget & Goals", icon: <Target size={18} />, path: "/goals" },
-    { name: "Transaksi", icon: <CreditCard size={18} />, path: "/transaksi" },
+    { name: "Transaksi", icon: <CreditCard size={18} />, path: "/transactionList" },
     { name: "Pengaturan", icon: <Settings size={18} />, path: "/pengaturan" },
   ];
 
