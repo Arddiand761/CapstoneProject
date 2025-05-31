@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import Sidebar from "./sidebar";
+import Navbar from "./sidebar"; // Pastikan sudah rename Sidebar menjadi Navbar
 
-// Placeholder untuk ikon (Anda bisa menggantinya dengan react-icons atau SVG kustom)
+// Placeholder untuk ikon edit
 const EditIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -36,7 +36,6 @@ const ProfileSettings = () => {
       "https://placehold.co/128x128/E0E0E0/757575?text=AZ&font=raleway",
   });
 
-  // Efek untuk animasi mount
   useEffect(() => {
     setIsMounted(true);
   }, []);
@@ -90,16 +89,12 @@ const ProfileSettings = () => {
   };
 
   return (
-    <div className="flex min-h-screen bg-gray-50">
-      {/* Sidebar */}
-      <Sidebar />
+    <div className="min-h-screen bg-gray-50">
+      {/* Navbar */}
+      <Navbar />
 
       {/* Main Content */}
-      <main
-        className={`flex-1 ml-64 p-6 sm:p-8 bg-gray-50 transition-opacity duration-500 ease-in-out ${
-          isMounted ? "opacity-100" : "opacity-0"
-        }`}
-      >
+      <main className="pt-24 max-w-2xl mx-auto px-4 sm:px-8 space-y-6">
         <h1 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-6 sm:mb-8">
           Pengaturan Profile
         </h1>

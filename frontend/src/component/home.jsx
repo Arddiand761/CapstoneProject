@@ -9,7 +9,7 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
-import Sidebar from "./sidebar";
+import Navbar from "./sidebar"; // Pastikan sudah rename Sidebar menjadi Navbar
 
 const HomePage = () => {
   const [monthlyData, setMonthlyData] = useState([
@@ -77,12 +77,12 @@ const HomePage = () => {
   ];
 
   return (
-    <div className="flex min-h-screen bg-gray-50">
-      {/* Sidebar */}
-      <Sidebar />
+    <div className="min-h-screen bg-gray-50">
+      {/* Navbar */}
+      <Navbar />
 
       {/* Main Content */}
-      <main className="flex-1 ml-64 p-6 space-y-6">
+      <main className="pt-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
         {/* Header */}
         <div className="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
