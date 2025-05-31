@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
-import Sidebar from "./sidebar"; // Pastikan path ke komponen Sidebar Anda benar
+import Navbar from "./sidebar"; // Ganti Sidebar menjadi Navbar jika sudah rename
 
-// Placeholder untuk ikon kategori (Anda bisa menggantinya dengan react-icons atau SVG kustom)
 const CategoryIconPlaceholder = ({ name, isActive, onClick }) => (
   <button
     type="button"
@@ -96,15 +95,13 @@ const TransactionInputPage = () => {
   };
 
   return (
-    // Jika Sidebar memiliki posisi fixed/absolute, div terluar ini mungkin tidak perlu 'flex'
-    // Namun, jika Sidebar adalah bagian dari flex flow, biarkan 'flex'
-    <div className="flex min-h-screen bg-gray-50">
-      <Sidebar />
-      {/* Konten Utama */}
-      {/* Tambahkan margin kiri (misalnya, md:ml-64) jika Sidebar Anda fixed dan lebarnya w-64 */}
-      {/* Sesuaikan nilai 'ml-64' dengan lebar aktual Sidebar Anda */}
+    <div className="min-h-screen bg-gray-50">
+      {/* Navbar */}
+      <Navbar />
+
+      {/* Main Content */}
       <main
-        className={`flex-1 p-6 sm:p-8 bg-gray-100 transition-opacity duration-700 ease-in-out md:ml-64 ${ // Penambahan md:ml-64
+        className={`pt-24 max-w-4xl mx-auto px-4 sm:px-8 space-y-6 transition-opacity duration-700 ease-in-out ${
           isMounted ? "opacity-100" : "opacity-0"
         }`}
       >
@@ -187,15 +184,17 @@ const TransactionInputPage = () => {
             <label className="block text-sm sm:text-base font-semibold text-gray-700 mb-3">
               Kategori
             </label>
-            <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-8 gap-3 sm:gap-4">
-              {categories.map((category) => (
-                <CategoryIconPlaceholder
-                  key={category.id}
-                  name={category.name}
-                  isActive={selectedCategory === category.name}
-                  onClick={() => setSelectedCategory(category.name)}
-                />
-              ))}
+            <div className="overflow-x-auto">
+              <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-8 gap-3 sm:gap-4 min-w-[400px]">
+                {categories.map((category) => (
+                  <CategoryIconPlaceholder
+                    key={category.id}
+                    name={category.name}
+                    isActive={selectedCategory === category.name}
+                    onClick={() => setSelectedCategory(category.name)}
+                  />
+                ))}
+              </div>
             </div>
           </div>
 
@@ -204,8 +203,8 @@ const TransactionInputPage = () => {
             <label className="block text-sm sm:text-base font-semibold text-gray-700 mb-2">
               Metode Pembayaran
             </label>
-            <div className="flex justify-center"> {/* Memusatkan tombol pembayaran jika hanya ada dua */}
-              <div className="flex space-x-2 sm:space-x-3 w-full md:w-auto max-w-md md:max-w-none"> {/* Lebar disesuaikan */}
+            <div className="flex justify-center">
+              <div className="flex space-x-2 sm:space-x-3 w-full md:w-auto max-w-md md:max-w-none">
                 <button
                   type="button"
                   onClick={() => setPaymentMethod("cash")}
