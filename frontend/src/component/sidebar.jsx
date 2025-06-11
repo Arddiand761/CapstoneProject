@@ -1,5 +1,5 @@
 import React from "react";
-import { User, Home, Target, CreditCard, Settings, LogOut } from "lucide-react";
+import { User, Home, Target, CreditCard, LogOut } from "lucide-react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
@@ -9,7 +9,13 @@ const Navbar = () => {
   const handleLogout = () => {
     localStorage.removeItem("isLoggedIn");
     localStorage.removeItem("user");
+    localStorage.removeItem("token"); // Hapus token juga
+
+    // Redirect ke halaman login
     navigate("/");
+
+    // Optional: Show success message
+    console.log("Successfully logged out");
   };
 
   const menuItems = [
@@ -21,7 +27,6 @@ const Navbar = () => {
       icon: <CreditCard size={18} />,
       path: "/transactionList",
     },
-    { name: "Pengaturan", icon: <Settings size={18} />, path: "/pengaturan" },
   ];
 
   return (

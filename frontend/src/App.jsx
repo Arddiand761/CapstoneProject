@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from "react";
 import {
   BrowserRouter as Router,
@@ -52,21 +53,90 @@ const AnimatedRoutes = () => {
     <AnimatePresence mode="wait">
       <Routes location={location} key={location.pathname}>
         {/* Rute Publik (tidak butuh login) */}
-        <Route path="/" element={<AnimatedPage><Login /></AnimatedPage>} />
-        <Route path="/register" element={<AnimatedPage><Register /></AnimatedPage>} />
-        <Route path="/introduction" element={<AnimatedPage><Introduction /></AnimatedPage>} />
+        <Route
+          path="/"
+          element={
+            <AnimatedPage>
+              <Login />
+            </AnimatedPage>
+          }
+        />
+        <Route
+          path="/register"
+          element={
+            <AnimatedPage>
+              <Register />
+            </AnimatedPage>
+          }
+        />
+        <Route
+          path="/introduction"
+          element={
+            <AnimatedPage>
+              <Introduction />
+            </AnimatedPage>
+          }
+        />
 
         {/* Rute yang Dilindungi (butuh login) */}
-        <Route path="/home" element={<ProtectedRoute><HomePage /></ProtectedRoute>} />
-        <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
-        <Route path="/datadiri" element={<ProtectedRoute><DataDiri /></ProtectedRoute>} />
-        <Route path="/informasi" element={<ProtectedRoute><Informasi /></ProtectedRoute>} />
-        <Route path="/transactionInput" element={<ProtectedRoute><TransactionInputPage /></ProtectedRoute>} />
-        <Route path="/transactionList" element={<ProtectedRoute><TransactionListPage /></ProtectedRoute>} />
-        
-        {/* === RUTE BARU UNTUK FITUR GOALS === */}
-        <Route path="/goals" element={<ProtectedRoute><BudgetAndGoals /></ProtectedRoute>} />
+        <Route
+          path="/home"
+          element={
+            <ProtectedRoute>
+              <HomePage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/datadiri"
+          element={
+            <ProtectedRoute>
+              <DataDiri />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/informasi"
+          element={
+            <ProtectedRoute>
+              <Informasi />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/transactionInput"
+          element={
+            <ProtectedRoute>
+              <TransactionInputPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/transactionList"
+          element={
+            <ProtectedRoute>
+              <TransactionListPage />
+            </ProtectedRoute>
+          }
+        />
 
+        {/* === RUTE BARU UNTUK FITUR GOALS === */}
+        <Route
+          path="/goals"
+          element={
+            <ProtectedRoute>
+              <BudgetAndGoals />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </AnimatePresence>
   );
