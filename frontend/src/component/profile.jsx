@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
 import Navbar from "./sidebar"; // Pastikan sudah rename Sidebar menjadi Navbar
 
@@ -19,14 +20,18 @@ const EditIcon = () => (
   </svg>
 );
 
+const BASE_URL = "https://backendhapi-production.up.railway.app";
+
 const ProfileSettings = () => {
   const [activeTab, setActiveTab] = useState("editProfile");
   const [isMounted, setIsMounted] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState("");
 
   const [profileData, setProfileData] = useState({
-    yourName: "Astrid Zablonski",
-    userName: "Astrid Zablonski",
-    email: "h5hrvyst1bre@yahoo.com",
+    yourName: "",
+    userName: "",
+    email: "",
     dateOfBirth: "1990-01-12",
     permanentAddress: "sewon, bantul, yogyakarta",
     city: "Bantul",
@@ -36,8 +41,53 @@ const ProfileSettings = () => {
       "https://placehold.co/128x128/E0E0E0/757575?text=AZ&font=raleway",
   });
 
+  // Fungsi untuk fetch profile dari API
+  const fetchProfile = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        setError("Token tidak ditemukan. Silakan login ulang.");
+        return;
+      }
+
+      const response = await fetch(`${BASE_URL}/me`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.error || "Gagal mengambil data profile");
+      }
+
+      // Ambil data tambahan dari localStorage
+      const savedProfileData = JSON.parse(
+        localStorage.getItem("profileData") || "{}"
+      );
+
+      // Gabungkan data dari API dengan data lokal
+      setProfileData((prev) => ({
+        ...prev,
+        ...savedProfileData, // data lokal (foto, alamat, dll)
+        // Data dari API selalu menimpa data lokal untuk field yang sama
+        yourName: data.user.username,
+        userName: data.user.username,
+        email: data.user.email,
+      }));
+    } catch (err) {
+      setError(err.message || "Gagal mengambil data profile");
+      console.error("Error fetching profile:", err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   useEffect(() => {
     setIsMounted(true);
+    fetchProfile();
   }, []);
 
   const handleInputChange = (e) => {
@@ -51,16 +101,35 @@ const ProfileSettings = () => {
       const reader = new FileReader();
       reader.onloadend = () => {
         setProfileData((prev) => ({ ...prev, profilePicture: reader.result }));
+
+        // Simpan foto ke localStorage langsung
+        const savedData = JSON.parse(
+          localStorage.getItem("profileData") || "{}"
+        );
+        savedData.profilePicture = reader.result;
+        localStorage.setItem("profileData", JSON.stringify(savedData));
       };
       reader.readAsDataURL(file);
-      console.log("Gambar profil dipilih:", file.name);
     }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    // Simpan data yang tidak ada di API ke localStorage
+    const dataToSave = {
+      dateOfBirth: profileData.dateOfBirth,
+      permanentAddress: profileData.permanentAddress,
+      city: profileData.city,
+      postalCode: profileData.postalCode,
+      country: profileData.country,
+      profilePicture: profileData.profilePicture,
+    };
+
+    localStorage.setItem("profileData", JSON.stringify(dataToSave));
+
     console.log("Data profil disimpan:", profileData);
-    alert("Data profil disimpan! (Simulasi)");
+    alert("Data profil disimpan!");
   };
 
   const getFormattedDate = (dateString) => {
@@ -87,6 +156,35 @@ const ProfileSettings = () => {
     }
     return dateString;
   };
+
+  // Loading state
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gray-50">
+        <Navbar />
+        <main className="pt-24 max-w-2xl mx-auto px-4 sm:px-8">
+          <div className="flex justify-center items-center h-64">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-600"></div>
+          </div>
+        </main>
+      </div>
+    );
+  }
+
+  // Error state
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gray-50">
+        <Navbar />
+        <main className="pt-24 max-w-2xl mx-auto px-4 sm:px-8">
+          <div className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded-md">
+            <p className="font-semibold">Error</p>
+            <p>{error}</p>
+          </div>
+        </main>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -159,10 +257,10 @@ const ProfileSettings = () => {
                 </div>
                 <div>
                   <h2 className="text-lg sm:text-xl font-semibold text-gray-700">
-                    {profileData.yourName}
+                    {profileData.yourName || "Loading..."}
                   </h2>
                   <p className="text-sm text-gray-500">
-                    @{profileData.userName}
+                    @{profileData.userName || "Loading..."}
                   </p>
                 </div>
               </div>
